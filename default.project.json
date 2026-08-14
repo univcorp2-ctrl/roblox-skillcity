@@ -1,0 +1,22 @@
+{
+  "name": "SkillCity",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "SkillCity": {"$path": "src/ReplicatedStorage/SkillCity"}
+    },
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "SkillCityServer": {"$path": "src/ServerScriptService/SkillCityServer.server.luau"},
+      "Services": {"$path": "src/ServerScriptService/Services"}
+    },
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "StarterPlayerScripts": {
+        "$className": "StarterPlayerScripts",
+        "SkillCityClient": {"$path": "src/StarterPlayer/StarterPlayerScripts/SkillCityClient.client.luau"}
+      }
+    }
+  }
+}
