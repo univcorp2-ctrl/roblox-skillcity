@@ -1,0 +1,22 @@
+name: Build SkillCity
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: rojo-rbx/setup-rojo@v1
+        with:
+          version: 7.7.0
+      - uses: Roblox/setup-foreman@v1
+        continue-on-error: true
+      - run: python scripts/static_check.py
+      - run: rojo build default.project.json -o SkillCity.rbxlx
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SkillCity-place
+          path: SkillCity.rbxlx
