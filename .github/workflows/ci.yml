@@ -9,14 +9,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: rojo-rbx/setup-rojo@v1
-        with:
-          version: 7.7.0
-      - uses: Roblox/setup-foreman@v1
-        continue-on-error: true
-      - run: python scripts/static_check.py
-      - run: rojo build default.project.json -o SkillCity.rbxlx
+      - name: Install pinned Rojo
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL -o /tmp/rojo.zip https://github.com/rojo-rbx/rojo/releases/download/v7.6.1/rojo-7.6.1-linux-x86_64.zip
+          mkdir -p "$HOME/.local/bin"
+          unzip -q -o /tmp/rojo.zip -d "$HOME/.local/bin"
+          chmod +x "$HOME/.local/bin/rojo"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          "$HOME/.local/bin/rojo" --version
+      - name: Static safety checks
+        run: python scripts/static_check.py
+      - name: Build place artifact
+        run: rojo build default.project.json -o SkillCity.rbxlx
       - uses: actions/upload-artifact@v4
         with:
           name: SkillCity-place
           path: SkillCity.rbxlx
+          if-no-files-found: error
